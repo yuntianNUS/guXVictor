@@ -11,5 +11,3 @@ class Account:
         self.type = type
         self.account_number = in_account_number
         self.balance = balance
-
-        pass
