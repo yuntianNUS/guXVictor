@@ -12,4 +12,3 @@ class Account:
         self.account_number = in_account_number
         self.balance = balance
 
-        pass
