@@ -7,6 +7,10 @@ class Server:
     def __init__(self):
         self.bank_db = BankDatabase()
 
+    def get_cus_name_from_acc_num(self, account_number: int):
+        account: Account = self.bank_db.get_account_by_account_number(account_number)
+        return account.customer.name
+
     def show_balance(self, account_number: int):
         account: Account = self.bank_db.get_account_by_account_number(account_number)
         return account.balance
@@ -39,8 +43,8 @@ class Server:
                 transfer_details={},
             )
             return account.balance
-        # else:
-        #     raise ValueError("Not enough balance")
+        else:
+            raise ValueError("Not enough balance")
 
     def deposit_balance(self, account_number: int, value: int):
         account: Account = self.bank_db.get_account_by_account_number(
@@ -74,25 +78,25 @@ class Server:
         except Exception as e:
             print(e)
 
-        # try:
-        self.withdraw_balance(from_account_number, value)
-        self.deposit_balance(to_account_number, value)
+        try:
+            self.withdraw_balance(from_account_number, value)
+            self.deposit_balance(to_account_number, value)
 
-        self.create_new_transaction(
-            account=from_account,
-            transaction_type="CR",
-            value=value,
-            is_transfer=True,
-            transfer_details={"transfer_to": to_account_number, "value": value},
-        )
-        self.create_new_transaction(
-            account=from_account,
-            transaction_type="DR",
-            value=value,
-            is_transfer=True,
-            transfer_details={"transfer_from": to_account_number, "value": value},
-        )
-        return from_account.balance
+            self.create_new_transaction(
+                account=from_account,
+                transaction_type="CR",
+                value=value,
+                is_transfer=True,
+                transfer_details={"transfer_to": to_account_number, "value": value},
+            )
+            self.create_new_transaction(
+                account=from_account,
+                transaction_type="DR",
+                value=value,
+                is_transfer=True,
+                transfer_details={"transfer_from": to_account_number, "value": value},
+            )
+            return from_account.balance
 
-        # except Exception as e:
-        #     print(e)
+        except Exception as e:
+            print(e)
