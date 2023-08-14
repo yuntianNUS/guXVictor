@@ -29,13 +29,15 @@ class BankDatabase:
         return self.accounts.copy()
 
     def get_customer_by_id(self, id):
-        cus = list(filter(lambda x: x.customer_id == id, self.customers))[0]
+        cus = list(filter(lambda x: x.get_customer_id() == id, self.customers))[0]
         if not cus:
             raise Exception("Customer not found")
         return cus
 
     def get_account_by_account_number(self, acc_number):
-        acc = list(filter(lambda x: x.account_number == acc_number, self.accounts))[0]
+        acc = list(
+            filter(lambda x: x.get_account_number() == acc_number, self.accounts)
+        )[0]
         if not acc:
             raise Exception("Account not found")
         return acc

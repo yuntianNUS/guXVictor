@@ -13,7 +13,8 @@ def run(server: Server):
                 2. [W]ithdrawal
                 3. [D]eposit
                 4. [T]ransfer funds
-                5. [Q]uit
+                5. [L]ast 10 transactions
+                6. [Q]uit
                 """
             ).upper()
 
@@ -26,15 +27,28 @@ def run(server: Server):
                 case "W":
                     try:
                         withdraw_value = int(input("Enter amount to withdraw > "))
-                        curr_bal = server.withdraw_balance(curr_acc_num, withdraw_value)
+                        curr_bal = server.withdraw_balance(
+                            curr_acc_num, withdraw_value, False, {}
+                        )
                         print("Withdrawal done. Your balance now is: ", curr_bal)
                     except Exception as e:
                         print(e)
                 case "D":
                     try:
                         deposit_value = int(input("Enter amount to deposit > "))
-                        curr_bal = server.deposit_balance(curr_acc_num, deposit_value)
+                        curr_bal = server.deposit_balance(
+                            curr_acc_num, deposit_value, False, {}
+                        )
                         print("Deposit done. Your balance now is: ", curr_bal)
+                    except Exception as e:
+                        print(e)
+                case "L":
+                    try:
+                        last_10 = server.get_last_ten_transactions(
+                            account_number=curr_acc_num
+                        )
+                        for transation in last_10:
+                            print(transation)
                     except Exception as e:
                         print(e)
                 case "T":
